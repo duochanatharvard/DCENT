@@ -1,0 +1,10 @@
+addpath(genpath(pwd));
+addpath('/n/home10/dchan/script/ICOADS3_preprocess_NC/')
+addpath('/n/home10/dchan/Matlab_Tool_Box/CD_Computation/')
+addpath('/n/home10/dchan/Matlab_Tool_Box/CD_Figures/')
+rmpath('/n/sw/helmod/apps/centos7/Core/matlab/R2023a-fasrc01/toolbox/matlab/matfun/')
+rmpath('/n/sw/helmod/apps/centos7/Core/matlab/R2022b-fasrc01/toolbox/matlab/matfun/')
+rmpath('/n/sw/helmod/apps/centos7/Core/matlab/R2022a-fasrc01/toolbox/matlab/matfun/')
+rmpath('/n/sw/helmod/apps/centos7/Core/matlab/R2021a-fasrc01/toolbox/matlab/matfun/')
+addpath(genpath('/n/home10/dchan/Matlab_Tool_Box/matfun/'))
+% addpath('/n/home10/dchan/script/Peter/Hvd_SST/Code_Homo_early_20cent_warming/Function')

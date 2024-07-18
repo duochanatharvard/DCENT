@@ -1,0 +1,6 @@
+/home/dc1e23/chanlab/DCENT/ICOADS
+/home/dc1e23/chanlab/DCENT/DCLAT
+/home/dc1e23/chanlab/DCENT/GWSST
+/home/dc1e23/chanlab/DCENT/DCENT
+/home/dc1e23/chanlab/DCENT/log
+/home/dc1e23/chanlab/DCENT/others
