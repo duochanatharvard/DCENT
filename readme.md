@@ -1,4 +1,4 @@
-Code for reproducing Dynamically Consistent ENsemble of Temperatures (__DCENT__) from scratch ([Chan et al., 2024a](Chan_et_al_2024_maintext.pdf)).
+Code for reproducing Dynamically Consistent ENsemble of Temperatures (__DCENT__) from scratch ([Chan et al., 2024a](Chan_et_al_2024_maintext.pdf)).  The DCENT data set is available at [https://doi.org/10.7910/DVN/NU4UGW](https://doi.org/10.7910/DVN/NU4UGW).
 
 ---
 ### Table of Contents
