@@ -161,6 +161,9 @@ The output of this step is a 200-member DCENT ensemble, in the DCENT folder, whi
 - **`SATH_grid`** (`30000` MB): Memory required for gridding homogenized land station temperatures
 
 ---
+
+This project is licensed under the Creative Commons Attribution 4.0 International License - see the [LICENSE](LICENSE) file for details.
+
 Maintained by __Duo Chan__ (Duo.Chan@soton.ac.uk)
 
-Last Update: July 4, 2024
+Last Update: July 23, 2024
