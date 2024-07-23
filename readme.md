@@ -1,4 +1,8 @@
-Code for reproducing Dynamically Consistent ENsemble of Temperatures (__DCENT__) from scratch ([Chan et al., 2024a](Chan_et_al_2024_maintext.pdf)).  The DCENT data set is available at [https://doi.org/10.7910/DVN/NU4UGW](https://doi.org/10.7910/DVN/NU4UGW).
+The Dynamically Consistent ENsemble of Temperature (__DCENT__) is a surface data set for monitoring global and regional temperatures since 1850.  This product provides combined land surface air temperature (LSAT) and sea surface temperature (SST) estimates at monthly 5°x5° resolution.  A major feature of DCENT, compared with other widely used products, is the harmonisation of land and ocean temperatures throughout the historical period.  
+
+This repository contains code for reproducing DCENT from scratch ([Chan et al., 2024a](Chan_et_al_2024_maintext.pdf)).  The DCENT data set is available at [https://doi.org/10.7910/DVN/NU4UGW](https://doi.org/10.7910/DVN/NU4UGW).
+
+__Reference__: Chan D., Gebbie G., Huybers P., & Kent E. (2024). An Ensemble of Earth Surface Temperature Change since 1850 with Dynamically Consistent Land and Ocean Evolution.  Scientific Data.
 
 ---
 ### Table of Contents
