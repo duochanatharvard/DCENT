@@ -78,7 +78,7 @@ function LME_correct_2022_pattern_sum(P)
             PP        = P; PP.subset_yr_list = yr;
             file_load = LME_output_files('Corr_2022_clean',PP);
 
-            data = load(file_load,'SST_ship',['SST_corr_rnd',num2str(P.en)]);
+            data = load(file_load,'SST_ship',['SST_corr_rnd_',num2str(P.en)]);
 
             data.SST_corr_rnd = data.(['SST_corr_rnd_', num2str(P.en)]);
 
