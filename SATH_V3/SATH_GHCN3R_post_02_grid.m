@@ -48,22 +48,23 @@ save(file_save,'SAT_all_anm','lon','lat','-v7.3');
 
 % Grid data ------------------------------------------------------------------------
 disp('Gridding monthly data')
+clear('SAT_grid','SAT_N','SAT_GL','SAT_REG')
 reso_x    = 5; 
 reso_y    = 5; 
 SAT_grid  = nan(360/reso_x,180/reso_y,12,Ny,3);
 SAT_N     = nan(360/reso_x,180/reso_y,12,Ny,3);
 for id = 1:3
-for ct_yr = 1:size(SAT_all_anm,3)
-    if rem(ct_yr,20) == 0,  disp(ct_yr);  end
-    for ct_mon = 1:12
-        temp = SAT_all_anm(:,ct_mon,ct_yr,id);
-        l    = ~isnan(temp);
-        if nnz(l) > 0
-            [SAT_grid(:,:,ct_mon,ct_yr,id),SAT_N(:,:,ct_mon,ct_yr,id)] ...
-                = CDC_pnt2grd(Lon_out(l),Lat_out(l),[],temp(l),reso_x,reso_y,[]);
+    for ct_yr = 1:size(SAT_all_anm,3)
+        if rem(ct_yr,20) == 0,  disp(ct_yr);  end
+        for ct_mon = 1:12
+            temp = SAT_all_anm(:,ct_mon,ct_yr,id);
+            l    = ~isnan(temp);
+            if nnz(l) > 0
+                [SAT_grid(:,:,ct_mon,ct_yr,id),SAT_N(:,:,ct_mon,ct_yr,id)] ...
+                    = CDC_pnt2grd(Lon_out(l),Lat_out(l),[],temp(l),reso_x,reso_y,[]);
+            end
         end
     end
-end
 end
 
 SAT_GL = CDC_mask_mean(SAT_grid,[reso_y/2:reso_y:180]-90,ones(360/reso_x,180/reso_y));
@@ -74,5 +75,33 @@ for ct = 1:size(mask_land,3)
     SAT_REG(:,:,:,ct) = CDC_mask_mean(SAT_grid,[reso_y/2:reso_y:180]-90,mask_land(:,:,ct));
 end
 
-file_save = [SATH_IO(case_name,'dir_member',mem_id),'Y_corrected_SAT_anm_gridded_',PHA_version,'.mat'];
+file_save = [SATH_IO(case_name,'dir_member',mem_id),'Y_corrected_SAT_anm_gridded_5X5_',PHA_version,'.mat'];
 save(file_save,'SAT_GL','SAT_REG','SAT_grid','SAT_N','-v7.3'); 
+
+
+% Grid data ------------------------------------------------------------------------
+disp('Gridding monthly data')
+clear('SAT_grid','SAT_N','SAT_GL','SAT_REG')
+reso_x    = 1; 
+reso_y    = 1; 
+SAT_grid  = nan(360/reso_x,180/reso_y,12,Ny,3);
+SAT_N     = nan(360/reso_x,180/reso_y,12,Ny,3);
+for id = 1:3
+    for ct_yr = 1:size(SAT_all_anm,3)
+        if rem(ct_yr,20) == 0,  disp(ct_yr);  end
+        for ct_mon = 1:12
+            temp = SAT_all_anm(:,ct_mon,ct_yr,id);
+            l    = ~isnan(temp);
+            if nnz(l) > 0
+                [SAT_grid(:,:,ct_mon,ct_yr,id),SAT_N(:,:,ct_mon,ct_yr,id)] ...
+                    = CDC_pnt2grd(Lon_out(l),Lat_out(l),[],temp(l),reso_x,reso_y,[]);
+            end
+        end
+    end
+end
+
+SAT_GL = CDC_mask_mean(SAT_grid,[reso_y/2:reso_y:180]-90,ones(360/reso_x,180/reso_y));
+
+file_save = [SATH_IO(case_name,'dir_member',mem_id),'Y_corrected_SAT_anm_gridded_1X1_',PHA_version,'.mat'];
+save(file_save,'SAT_GL','SAT_grid','SAT_N','-v7.3'); 
+
