@@ -88,12 +88,13 @@ function file = LME_output_files(input,P)
 
     elseif strcmp(input,'Corr_2022_clean')
         dir_save  = LME_OI('idv_corr');
-        file = [dir_save,'Raw_and_Correction_',P.case_name,'_',...
+        file = [dir_save,'Raw_and_Correction_',num2str(P.reso_x),'X',num2str(P.reso_x),'_',P.case_name,'_',...
                  num2str(P.subset_yr_list(1)),'_',num2str(P.subset_yr_list(end)),'_do_season_',num2str(P.do_season),'_pattern_excld_smll_bns_',num2str(P.excld_smll_bns),'.mat'];
 
     elseif strcmp(input,'Corr_2022_sum')
         dir_save  = LME_OI('rnd_corr');
-        file = [dir_save,'SST_en_',num2str(P.en),'_',P.case_name,'_do_season_',num2str(P.do_season),'_pattern_excld_smll_bns_',num2str(P.excld_smll_bns),'.mat'];
+        file = [dir_save,'SST_',num2str(P.reso_x),'X',num2str(P.reso_x),...
+            '_en_',num2str(P.en),'_',P.case_name,'_do_season_',num2str(P.do_season),'_pattern_excld_smll_bns_',num2str(P.excld_smll_bns),'.mat'];
 
     elseif strcmp(input,'Corr_full_sst_only')
         dir_save  = LME_OI('idv_corr');

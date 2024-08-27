@@ -25,7 +25,11 @@ function LME_correct_2022_pattern(P)
     N_member = size(lme.out_rnd.bias_fixed_rnd,2);
 
     disp(['Get pattern of biases ...'])
-    load(LME_input_files('Pattern',P),'Bucket_bias_pattern')
+    if reso_x == 5
+        load(LME_input_files('Pattern',P),'Bucket_bias_pattern')
+    else
+        load(LME_input_files('Pattern_1x1',P),'Bucket_bias_pattern')
+    end
     Bucket_bias_pattern(isnan(Bucket_bias_pattern)) = 0;
 
     % *********************************************************************
@@ -85,7 +89,7 @@ function LME_correct_2022_pattern(P)
                 end
                 kind = [DATA.DCK DATA.SI_Std];
                 DATA.bck_pattern = LME_function_grd2pnt(DATA.C0_LON,DATA.C0_LAT,...
-                                        [],Bucket_bias_pattern(:,:,mon),5,5,1);
+                                        [],Bucket_bias_pattern(:,:,mon),reso_x,reso_y,1);
 
                 % Read all SSTs needed to generate gridded data -----------
                 % To write a script reading those data
