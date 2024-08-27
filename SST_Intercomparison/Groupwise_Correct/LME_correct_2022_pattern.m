@@ -182,9 +182,26 @@ function LME_correct_2022_pattern(P)
     end
 
     % Save data -----------------------------------------------------------
+    for i = 1:200
+        % Generate the variable name dynamically
+        varName = sprintf('SST_corr_rnd_%d', i);
+        
+        % Create a new structure for this slice and assign it to a dynamically named variable
+        eval([varName ' = struct();']);
+        eval([varName '.grp_fix_ones_rnd = SST_corr_rnd.grp_fix_ones_rnd(:, :, :, :, i);']);
+        eval([varName '.grp_fix_ptrn_rnd = SST_corr_rnd.grp_fix_ptrn_rnd(:, :, :, :, i);']);
+        eval([varName '.grp_dcd_ones_rnd = SST_corr_rnd.grp_dcd_ones_rnd(:, :, :, :, i);']);
+        eval([varName '.grp_dcd_ptrn_rnd = SST_corr_rnd.grp_dcd_ptrn_rnd(:, :, :, :, i);']);
+    end
+        
     PP = P; PP.subset_yr_list = yr_list;
     file_save = LME_output_files('Corr_2022_clean',PP);
-    save(file_save,'SST_corr','SST_corr_rnd','SST_ship','NUM_ship','SST_buoy','NUM_buoy','-v7.3');
+    save(file_save,'SST_corr','SST_ship','NUM_ship','SST_buoy','NUM_buoy','-v7.3');
+
+    for i = 1:200
+        varName = sprintf('SST_corr_rnd_%d', i);
+        save(file_save, varName, '-append');
+    end
     
 end
 
