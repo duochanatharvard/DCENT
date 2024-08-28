@@ -79,9 +79,18 @@ function AOI_Step_03_scale_data(num,Para_AOI)
     [SST_corr, MLR_b, Stats_common, SST_corr_taper, MLR_b_taper] = AOI_func_correct_SST...
                (SST_infer_grid, SST_infer_N, SST_obs, num + off, Para_AOI);
 
-    file_save = [AOI_IO('data',P),'AOI_Corrected_SST_gridded_',P.PHA_version,'_R_',num2str(Para_AOI.do_round),'.mat'];
+    file_save = [AOI_IO('data',P),'AOI_Corrected_SST_gridded_5X5_',P.PHA_version,'_R_',num2str(Para_AOI.do_round),'.mat'];
     save(file_save,'SST_corr','MLR_b','SST_corr_taper','MLR_b_taper','-v7.3');  
 
-    clear('SST_infer_grid','SST_infer_N','SST_corr','SST_corr_taper','MLR_b_taper','MLR_b')
-    
+    clear('SST_infer_grid','SST_infer_N','SST_corr','SST_corr_taper')
+
+    % Generate corrections for 1x1 degree resolution data
+    Para_AOI.reso_x = 1;
+    Para_AOI.reso_y = 1;
+    SST_obs         = AOI_read_data('LME_SST', num + off, Para_AOI);
+    SST_corr_taper  = AOI_func_correct_SST_1X1(MLR_b_taper, SST_obs);
+
+    file_save = [AOI_IO('data',P),'AOI_Corrected_SST_gridded_1X1_',P.PHA_version,'_R_',num2str(Para_AOI.do_round),'.mat'];
+    save(file_save,'SST_corr_taper','MLR_b_taper','-v7.3');
+
 end

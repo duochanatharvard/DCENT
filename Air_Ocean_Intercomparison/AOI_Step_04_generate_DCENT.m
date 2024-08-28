@@ -1,4 +1,4 @@
-function AOI_Step_05_generate_DCENT(num,Para_AOI)
+function AOI_Step_04_generate_DCENT(num,Para_AOI)
 
     SATH_GHCN_post_setup;
 
