@@ -1,5 +1,6 @@
 export reso=$1 
 export ERRSTR_mem=22150
+export N_job=15
 
 source ../DCENT_config.sh
 export dir_list_file="../dir_list.txt"
@@ -13,12 +14,12 @@ export ERRSTR_S1=$(sbatch << EOF | egrep -o -e "\b[0-9]+$"
 #SBATCH -p ${cluster_use}
 #SBATCH -J ERRSTR_S1
 #SBATCH --nodes=1 
-#SBATCH --array=1-20
+#SBATCH --array=1-${N_job}
 #SBATCH -t ${cluster_time}
 #SBATCH --mem-per-cpu=${ERRSTR_mem}
 #SBATCH -o ${dir_log}/err_ERRSTR_S1
 
-matlab -nosplash -nodesktop -nodisplay -r "num=\${SLURM_ARRAY_TASK_ID}; addpath(genpath('..')); yr_list = (1849+num):20:2024; reso = ${reso}; ERRSTR_Step_01_count_numbers(yr_list,reso); quit;">>${dir_log}/log_ERRSTR_S1_\${SLURM_ARRAY_TASK_ID}
+matlab -nosplash -nodesktop -nodisplay -r "num=\${SLURM_ARRAY_TASK_ID}; addpath(genpath('..')); yr_list = (1849+num):${N_job}:2024; reso = ${reso}; ERRSTR_Step_01_count_numbers(yr_list,reso); quit;">>${dir_log}/log_ERRSTR_S1_\${SLURM_ARRAY_TASK_ID}
 
 EOF
 )
@@ -32,13 +33,13 @@ export ERRSTR_S2=$(sbatch << EOF | egrep -o -e "\b[0-9]+$"
 #SBATCH -p ${cluster_use}
 #SBATCH -J ERRSTR_S2
 #SBATCH --nodes=1 
-#SBATCH --array=1-20
+#SBATCH --array=1-${N_job}
 #SBATCH --dependency=afterok:${ERRSTR_S1}
 #SBATCH -t ${cluster_time}
 #SBATCH --mem-per-cpu=${ERRSTR_mem}
 #SBATCH -o ${dir_log}/err_ERRSTR_S2
 
-matlab -nosplash -nodesktop -nodisplay -r "num=\${SLURM_ARRAY_TASK_ID}; addpath(genpath('..')); yr_list = (1849+num):20:2024; reso = ${reso}; ERRSTR_Step_02_infer(yr_list,reso); quit;">>${dir_log}/log_ERRSTR_S2_\${SLURM_ARRAY_TASK_ID}
+matlab -nosplash -nodesktop -nodisplay -r "num=\${SLURM_ARRAY_TASK_ID}; addpath(genpath('..')); yr_list = (1849+num):${N_job}:2024; reso = ${reso}; ERRSTR_Step_02_infer(yr_list,reso); quit;">>${dir_log}/log_ERRSTR_S2_\${SLURM_ARRAY_TASK_ID}
 
 EOF
 )
@@ -52,13 +53,13 @@ export ERRSTR_S3=$(sbatch << EOF | egrep -o -e "\b[0-9]+$"
 #SBATCH -p ${cluster_use}
 #SBATCH -J ERRSTR_S3
 #SBATCH --nodes=1 
-#SBATCH --array=1-20
+#SBATCH --array=1-${N_job}
 #SBATCH --dependency=afterok:${ERRSTR_S2}
 #SBATCH -t ${cluster_time}
 #SBATCH --mem-per-cpu=${ERRSTR_mem}
 #SBATCH -o ${dir_log}/err_ERRSTR_S3
 
-matlab -nosplash -nodesktop -nodisplay -r "num=\${SLURM_ARRAY_TASK_ID}; addpath(genpath('..')); yr_list = (1849+num):20:2024; reso = ${reso}; ERRSTR_Step_03_cov_matrix(yr_list,reso); quit;">>${dir_log}/log_ERRSTR_S3_\${SLURM_ARRAY_TASK_ID}
+matlab -nosplash -nodesktop -nodisplay -r "num=\${SLURM_ARRAY_TASK_ID}; addpath(genpath('..')); yr_list = (1849+num):${N_job}:2024; reso = ${reso}; ERRSTR_Step_03_cov_matrix(yr_list,reso); quit;">>${dir_log}/log_ERRSTR_S3_\${SLURM_ARRAY_TASK_ID}
 
 EOF
 )
