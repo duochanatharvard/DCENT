@@ -32,19 +32,21 @@ function [a, b] = ERRSTR_Step_02_infer_single_type(yr, ct_type, reso)
         ct  = ct + 1;
         for mon = 1:12
             file_save = [ERRSTR_OI('SST_Count'),'SST_Count_reso_',num2str(reso),'_',num2str(yr),'_',CDF_num2str(mon,2),'.mat'];
-            switch ct_type
-                case 1
-                    temp = load(file_save,'Ns_track_sub','Ni2s_sub');
-                    N_track(:,:,ct,mon) = temp.Ns_track_sub;
-                    Ni2(:,:,ct,mon) = temp.Ni2s_sub;
-                case 2
-                    temp = load(file_save,'Nm_track_sub','Ni2m_sub');
-                    N_track(:,:,ct,mon) = temp.Nm_track_sub;
-                    Ni2(:,:,ct,mon) = temp.Ni2m_sub;
-                case 3
-                    temp = load(file_save,'Nd_track_sub','Ni2d_sub');
-                    N_track(:,:,ct,mon) = temp.Nd_track_sub;
-                    Ni2(:,:,ct,mon) = temp.Ni2d_sub;
+            if isfile(file_save)
+                switch ct_type
+                    case 1
+                        temp = load(file_save,'Ns_track_sub','Ni2s_sub');
+                        N_track(:,:,ct,mon) = temp.Ns_track_sub;
+                        Ni2(:,:,ct,mon) = temp.Ni2s_sub;
+                    case 2
+                        temp = load(file_save,'Nm_track_sub','Ni2m_sub');
+                        N_track(:,:,ct,mon) = temp.Nm_track_sub;
+                        Ni2(:,:,ct,mon) = temp.Ni2m_sub;
+                    case 3
+                        temp = load(file_save,'Nd_track_sub','Ni2d_sub');
+                        N_track(:,:,ct,mon) = temp.Nd_track_sub;
+                        Ni2(:,:,ct,mon) = temp.Ni2d_sub;
+                end
             end
         end
     end
