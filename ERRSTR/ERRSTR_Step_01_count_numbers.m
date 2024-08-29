@@ -1,6 +1,6 @@
 function ERRSTR_Step_01_count_numbers(yr_list,reso)
     for yr = yr_list
-        parfor mon = 1:12
+        for mon = 1:12
             disp(num2str([yr mon]))
             ERRSTR_Step_01_count_single(yr,mon,reso);
         end
