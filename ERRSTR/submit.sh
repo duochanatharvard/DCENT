@@ -65,3 +65,23 @@ EOF
 )
 
 echo Submitted Job ID : ERRSTR_S3 : ${ERRSTR_S3} 
+
+# Step 04 assemble covariance matrix  ###########################################################################
+export ERRSTR_S4=$(sbatch << EOF | egrep -o -e "\b[0-9]+$"
+#!/bin/sh
+#SBATCH --account=${cluster_account}
+#SBATCH -p ${cluster_use}
+#SBATCH -J ERRSTR_S4
+#SBATCH --nodes=1 
+#SBATCH --array=1-${N_job}
+#SBATCH --dependency=afterok:${ERRSTR_S3}
+#SBATCH -t ${cluster_time}
+#SBATCH --mem-per-cpu=${ERRSTR_mem}
+#SBATCH -o ${dir_log}/err_ERRSTR_S4
+
+matlab -nosplash -nodesktop -nodisplay -r "num=\${SLURM_ARRAY_TASK_ID}; addpath(genpath('..')); yr_list = (1849+num):${N_job}:2024; reso = ${reso}; ERRSTR_Step_04_assemble(yr_list,reso); quit;">>${dir_log}/log_ERRSTR_S4_\${SLURM_ARRAY_TASK_ID}
+
+EOF
+)
+
+echo Submitted Job ID : ERRSTR_S4 : ${ERRSTR_S4} 
