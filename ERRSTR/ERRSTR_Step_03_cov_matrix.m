@@ -10,15 +10,19 @@ end
 % -------------------------------------------------------------------------
 function ERRSTR_Step_03_cov_matrix_single(yr,mon,reso)
 
-    % Load Data used in the SST computation
-    [Ds, Dm, Dd] = ERRSTR_func_load_SST_data(yr,mon);
-
-    [~,Cs2,~] = get_cov_pq(Ds,reso);
-    [~,Cm2,~] = get_cov_pq(Dm,reso);
-    [~,Cd2,~] = get_cov_pq(Dd,reso);
-
     file_save = [ERRSTR_OI('Covariance'),'Covariance_reso_',num2str(reso),'_',num2str(yr),'_',CDF_num2str(mon,2),'.mat'];
-    save(file_save,'Cs2','Cm2','Cd2','-v7.3');
+
+    if ~isfile(file_save)
+        
+        % Load Data used in the SST computation
+        [Ds, Dm, Dd] = ERRSTR_func_load_SST_data(yr,mon);
+    
+        [~,Cs2,~] = get_cov_pq(Ds,reso);
+        [~,Cm2,~] = get_cov_pq(Dm,reso);
+        [~,Cd2,~] = get_cov_pq(Dd,reso);
+
+        save(file_save,'Cs2','Cm2','Cd2','-v7.3');
+    end
 
 end
 
