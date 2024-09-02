@@ -58,7 +58,7 @@ function AOI_Step_04_generate_DCENT(num,Para_AOI)
     else
         id  = num + 100;
     end
-    ncfilename = [AOI_IO('ChanT',P),'DCENT_ensemble_1850_',num2str(today_year),'_member_',CDF_num2str(id,3),'.nc'];
+    ncfilename = [AOI_IO('ChanT',P),'DCENT_ensemble_reso_',num2str(reso),'_1850_',num2str(today_year),'_member_',CDF_num2str(id,3),'.nc'];
     if isfile(ncfilename), delete(ncfilename); end
 
     nccreate(ncfilename, 'lon', 'Dimensions', {'lon', 360/reso}, 'Datatype', 'single');
