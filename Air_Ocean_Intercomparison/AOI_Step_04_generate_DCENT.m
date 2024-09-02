@@ -4,11 +4,12 @@ function AOI_Step_04_generate_DCENT(num,Para_AOI)
 
     yr_st = 1850;
     reso  = Para_AOI.reso_x;
+    app   = [num2str(reso),'X',num2str(reso)];
 
     % Load ship and buoy SSTs
     SST_buoy = AOI_read_data('SST_buoy', num, Para_AOI);
     N_buoy   = AOI_read_data('N_buoy',   num, Para_AOI);
-    load([AOI_IO('data',P),'AOI_Corrected_SST_gridded_',PHA_version,'_R_',num2str(Para_AOI.do_round),'.mat']);
+    load([AOI_IO('data',P),'AOI_Corrected_SST_gridded_',app,'_',PHA_version,'_R_',num2str(Para_AOI.do_round),'.mat']);
     SST_corr = SST_corr_taper;
     N_ship   = AOI_read_data('N_ship',   num, Para_AOI);
 
