@@ -14,7 +14,7 @@ function AOI_Step_04_generate_DCENT(num,Para_AOI)
     N_ship   = AOI_read_data('N_ship',   num, Para_AOI);
 
     % Load gridded LATs
-    fin      = [SATH_IO(case_name,'dir_member',mem_id),'Y_corrected_SAT_anm_gridded_',PHA_version,'.mat'];
+    fin      = [SATH_IO(case_name,'dir_member',mem_id),'Y_corrected_SAT_anm_gridded_',app,'_',PHA_version,'.mat'];
     % fin      = [SATH_IO('mat_GHCN_processed',P),'Corrected_SAT_gridded.mat'];
     load(fin,'SAT_grid'); 
     SAT_grid = SAT_grid(:,:,:,(yr_st-1699):end,Para_AOI.do_round);            % TODO
@@ -27,9 +27,20 @@ function AOI_Step_04_generate_DCENT(num,Para_AOI)
     SST = AOI_func_combine_two_fields(SST_corr,SST_buoy_ref_ship,N_ship,N_buoy2*6.8);
 
     % Combine ChanLAT with Chan SST
-    load('mask_of_land_ocean_ratio.mat','w_use')
-    w2 = repmat(w_use,1,1,size(SAT_grid,3),size(SAT_grid,4));
-
+    if reso == 5
+        load('mask_of_land_ocean_ratio.mat','w_use')
+        w2 = repmat(w_use,1,1,size(SAT_grid,3),size(SAT_grid,4));
+    else
+        P.threshold = 1;
+        lsm   = ncread('land_percent2_qd.nc','lsm')/100;
+        lsm   = lsm([721:end 1:720],end:-1:1);
+        w_use = CDC_average_grid(0.125:0.25:360,-89.875:0.25:90,lsm,0.5:1:359.5,-89.5:1:89.5,P);
+        w_use(w_use < 0.25 & w_use ~= 0) = 0.25;
+        w2    = repmat(w_use,1,1,size(SAT_grid,3),size(SAT_grid,4));
+        l     = w2 == 0 & ~isnan(SAT_grid);
+        w2(l) = 0.25;
+    end
+    
     T  = AOI_func_combine_two_fields(SAT_grid,SST,w2,1-w2);
 
     % Create the NetCDF file ----------------------------------------------
