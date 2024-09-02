@@ -44,7 +44,11 @@ function output = ERRSTR_OI(input)
         output = [ERRSTR_OI('home'),'Uncertainty/'];
 
     elseif strcmp(input,'Uncertainty_nc')
-        output = [ERRSTR_OI('home'),'Uncertainty_nc/'];        
+        output = [ERRSTR_OI('home'),'Uncertainty_nc/'];    
+
+    elseif strcmp(input,'LSAT_Uncertainty_nc')
+        output = [ERRSTR_OI('home'),'LSAT_Uncertainty_nc/'];    
+     
     end
 
     if ~exist(output,'dir'), mkdir(output); end
