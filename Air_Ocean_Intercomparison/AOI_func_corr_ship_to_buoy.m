@@ -15,14 +15,19 @@ function [SST_ship_ref_buoy,SST_buoy_ref_ship] = ...
         W2(:,:,ct)  = nansum(W,3);
     end
 
-    for ct1 = 1:72
-        for ct2 = 1:36
-            l1 = ct1 + [-1:1];
-            l2 = ct2 + [-1:1];
-            l1(l1<=0) = l1(l1<=0) + 72;
-            l1(l1>72) = l1(l1>72) - 72;
+    if size(DM2,1) == 72
+        window = 1;
+    else
+        window = 3;
+    end
+    for ct1 = 1:size(DM2,1)
+        for ct2 = 1:size(DM2,2)
+            l1 = ct1 + [-window:window];
+            l2 = ct2 + [-window:window];
+            l1(l1<=0) = l1(l1<=0) + size(DM2,1);
+            l1(l1>size(DM2,1)) = l1(l1>size(DM2,1)) - size(DM2,1);
             l2(l2<=0) = [];
-            l2(l2>35) = [];
+            l2(l2>size(DM2,2)) = [];
             D = DM2(l1,l2,:);
             W = W2(l1,l2,:);
             DM3(ct1,ct2,:) = nansum(nansum(W.*D,1),2) ./ nansum(nansum(W,1),2);
