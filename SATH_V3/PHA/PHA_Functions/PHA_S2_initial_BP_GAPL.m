@@ -61,8 +61,8 @@ function [bp_pair, bp_pair_flt] = ...
 
     % Setup calculation ===================================================
     tim         = 1:numel(Dif_T);
-    UID1        = NET(ct_pair,1);
-    UID2        = NET(ct_pair,2);
+    UID1        = double(NET(ct_pair,1));
+    UID2        = double(NET(ct_pair,2));
     bp_pair     = PHA_func_GAPL_single_diff_series...
                                           (Dif_T,tim,Para.try_trend,UID1,UID2);
 
