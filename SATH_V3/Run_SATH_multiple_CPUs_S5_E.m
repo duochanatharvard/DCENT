@@ -3,31 +3,38 @@ SATH_setup;
 % *************************************************************************
 % Load data 
 % *************************************************************************
-try
-    f_load      = SATH_IO(case_name,'result',mem_id, PHA_version);
-    load(f_load,'D','BP','NET')
+if do_a_new_month == 0
+    try
+        f_load      = SATH_IO(case_name,'result',mem_id, PHA_version);
+        load(f_load,'D','BP','NET')
 
-    fload       = SATH_IO(case_name,'attribute',mem_id, PHA_version);
-    load(fload,'Para');
+        fload       = SATH_IO(case_name,'attribute',mem_id, PHA_version);
+        load(fload,'Para');
 
-    disp('restart from existing files')
-    do_restart  = 1;
+        disp('restart from existing files')
+        do_restart  = 1;
 
-catch
+    catch
+        do_restart  = 0;
+    end
+else
+    do_restart  = 0;
+end
+
+if do_restart == 0
 
     fload       = SATH_IO(case_name,'attribute',mem_id, PHA_version);
     load(fload,'Para','BP_pair','BP_att');
-    
+
     fload       = SATH_IO(case_name,'combined',mem_id, PHA_version);
     load(fload,'BP_comb');
-    
+
     fname       = SATH_IO(case_name,'net',mem_id,PHA_version);
     load(fname,'NET_adj','NET_att','NET_pair');
-    
+
     D           = SATH_IO(case_name,'raw_data',mem_id,PHA_version);
-    
+
     disp('start from new files')
-    do_restart  = 0;
 
     BP.comb         = BP_comb;
     BP.pair         = BP_pair;

@@ -1,7 +1,7 @@
-/Users/dc1e23/Dropbox/------------- Data --------------------/DCENT_methodology/ICOADS
-/Users/dc1e23/Dropbox/------------- Data --------------------/DCENT_methodology/DCLAT
-/Users/dc1e23/Dropbox/------------- Data --------------------/DCENT_methodology/GWSST
-/Users/dc1e23/Dropbox/------------- Data --------------------/DCENT_methodology/DCENT
-/Users/dc1e23/Dropbox/------------- Data --------------------/DCENT_methodology/ERRSTR
-/Users/dc1e23/Dropbox/------------- Data --------------------/DCENT_methodology/log
-/Users/dc1e23/Dropbox/------------- Data --------------------/DCENT_methodology/others
+/n/home10/dchan/holy_peter2/DCENT_operational/ICOADS
+/n/home10/dchan/holy_peter2/DCENT_operational/DCLAT
+/n/home10/dchan/holy_peter2/DCENT_operational/GWSST
+/n/home10/dchan/holy_peter2/DCENT_operational/DCENT
+/n/home10/dchan/holy_peter2/DCENT_operational/ERRSTR
+/n/home10/dchan/holy_peter2/DCENT_operational/log
+/n/home10/dchan/holy_peter2/DCENT_operational/others

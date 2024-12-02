@@ -30,5 +30,6 @@ mv *.inv GHCNmV4/
 
 cd ${code_dir}
 sed -i "s/dir = '[0-9]\{8\}';/dir = '$date';/g" GHCN_IO.m
+echo "Start Matlab"
 matlab -nosplash -nodesktop -nodisplay -r "addpath(genpath('..')); do_QC = 0; GHCN_setup; GHCN_pre_01_ascii2mat; clear; do_QC = 1; GHCN_setup; GHCN_pre_01_ascii2mat; quit;" >> ${dir_log}/log_prepare_GHCNmV4_data
 

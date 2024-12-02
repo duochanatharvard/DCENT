@@ -3,7 +3,7 @@
 # export Matlab=/n/helmod/apps/centos7/Core/matlab/R2021a-fasrc01/bin/matlab        # TODO
 
 current_year=$(date +%Y)
-current_month=$(( $(date +%m) - 2 ))
+current_month=$(( $(date +%m) - 1))
 if [ $current_month -lt 1 ]; then
     current_year=$((current_year - 1))  # Decrease year by 1
     current_month=$((current_month + 12))  # Increase month by 12
@@ -92,11 +92,11 @@ EOF
     done
 done
 Pre_process=${job_list:1}
-echo ${Pre_process}
+echo "Preprocess:" ${Pre_process}
 
 # Update the pairing of shipbased SSTs *******************************************
 export do_update=1
-export yr_st=1850     # TODO
+export yr_st=2023     # TODO
 job_list=()
 for ((year=${yr_st}; year<=current_year; year++)); do
     export yr=${year}
@@ -113,9 +113,16 @@ for ((year=${yr_st}; year<=current_year; year++)); do
         if [ -e "$file_raw" ] || [ -e "$file_raw0" ]; then
             if [ -e "$file_name" ] || [ -e "$file_name0" ]; then
                 echo "$file_name exists"
-                export do_update=0
+                # export do_update=0
             else
                 echo "$file_name does not exist -> update pairing"
+
+if [ -n "${Pre_process}" ]; then
+  DEPENDENCY_OPTION="--dependency=afterok:${Pre_process}"
+else
+  DEPENDENCY_OPTION=""
+fi
+
 export JOB_find_pairs=$(sbatch << EOF | egrep -o -e "\b[0-9]+$"
 #!/bin/sh
 #SBATCH --account=${cluster_account}
@@ -124,6 +131,7 @@ export JOB_find_pairs=$(sbatch << EOF | egrep -o -e "\b[0-9]+$"
 #SBATCH -n 1
 #SBATCH --nodes=1 
 #SBATCH -t ${cluster_time}
+#SBATCH ${DEPENDENCY_OPTION}
 #SBATCH --mem=${ICOADS_preprocess_mem}
 #SBATCH -o ${dir_log}/GWSST_01_pair_err
 
@@ -144,7 +152,14 @@ echo ${Pair_list}
 echo do_update LME ${do_update}
 # SUM Pair *****************************************************************************
 # If anything is updated, then update the sumation of pairs and LME analysis accordingly
-if [ ${do_update} = "1" ]; then
+
+if [ -n "${Pair_list}" ]; then
+  export do_update_pair_sum=1
+else
+  export do_update_pair_sum=0
+fi
+
+if [ ${do_update_pair_sum} = "1" ]; then
 
 export JOB_sum_SST_pairs=$(sbatch << EOF | egrep -o -e "\b[0-9]+$"
 #!/bin/sh
@@ -168,6 +183,12 @@ fi
 # BIN for LME ****************************************************************************
 if [ ${do_update} = "1" ]; then
 
+if [ -n "${JOB_sum_SST_pairs}" ]; then
+  DEPENDENCY_OPTION="--dependency=afterok:${JOB_sum_SST_pairs}"
+else
+  DEPENDENCY_OPTION=""
+fi
+
     # Update pair binning
     export N_bin_sub=25   # TODO
 export JOB_BIN=$(sbatch << EOF | egrep -o -e "\b[0-9]+$"
@@ -178,12 +199,12 @@ export JOB_BIN=$(sbatch << EOF | egrep -o -e "\b[0-9]+$"
 #SBATCH -n 1
 #SBATCH --nodes=1 
 #SBATCH --array=1-${N_bin_sub}
-#SBATCH --dependency=afterok:${JOB_sum_SST_pairs}
+#SBATCH ${DEPENDENCY_OPTION}
 #SBATCH -t ${cluster_time}
-#SBATCH --exclusive
+#SBATCH --mem=${ICOADS_preprocess_mem}
 #SBATCH -o ${dir_log}/GWSST_03_bin_pair_err
 
-matlab -nosplash -nodesktop -nodisplay -r "addpath(genpath('..')); LME_setup_ship_SSTs; P.bin_sub_id = \${SLURM_ARRAY_TASK_ID};  LME_lme_bin_2021_pattern(P);  quit">>${dir_log}/GWSST_03_bin_pair_log
+matlab -nosplash -nodesktop -nodisplay -r "addpath(genpath('..')); LME_setup_ship_SSTs; P.bin_sub_id = \${SLURM_ARRAY_TASK_ID};  LME_lme_bin_2021_pattern(P);  quit">>${dir_log}/GWSST_03_bin_pair_log_\${SLURM_ARRAY_TASK_ID}
 
 EOF
 )

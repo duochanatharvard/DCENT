@@ -337,6 +337,12 @@ set filelist= ( \
   https://data.rda.ucar.edu/ds548.0/netcdf_r3.0/ICOADS_R3.0.2_2023-12.nc  \
   https://data.rda.ucar.edu/ds548.0/netcdf_r3.0/ICOADS_R3.0.2_2024-01.nc  \
   https://data.rda.ucar.edu/ds548.0/netcdf_r3.0/ICOADS_R3.0.2_2024-02.nc  \
+  https://data.rda.ucar.edu/ds548.0/netcdf_r3.0/ICOADS_R3.0.2_2024-03.nc  \
+  https://data.rda.ucar.edu/ds548.0/netcdf_r3.0/ICOADS_R3.0.2_2024-04.nc  \
+  https://data.rda.ucar.edu/ds548.0/netcdf_r3.0/ICOADS_R3.0.2_2024-05.nc  \
+  https://data.rda.ucar.edu/ds548.0/netcdf_r3.0/ICOADS_R3.0.2_2024-06.nc  \
+  https://data.rda.ucar.edu/ds548.0/netcdf_r3.0/ICOADS_R3.0.2_2024-07.nc  \
+
 )
 while($#filelist > 0)
   set syscmd = "wget $cert_opt $opts -P $dir_ICOADS $ $filelist[1]"

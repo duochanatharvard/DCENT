@@ -8,6 +8,8 @@ source ../DCENT_config.sh
 export dir_list_file="../dir_list.txt"
 dir_log=$(grep "log" "$dir_list_file" | head -n 1)
 
+export do_a_new_month=1  # This is to redo a new month rather than continue from a broken run of the current month
+
 ###########################################################################
 # 1. Get network of station pairs (#JOB = # of parameter combinations)
 ###########################################################################
@@ -99,10 +101,10 @@ export job_Est=$(sbatch << EOF | egrep -o -e "\b[0-9]+$"
 #SBATCH --dependency=afterok:${job_C}
 #SBATCH --array=1-${N_rnd}
 #SBATCH -t ${cluster_time}
-#SBATCH --exclusive
+#SBATCH --mem-per-cpu=${SATH_est_mem}
 #SBATCH -o ${dir_log}/${case_name}_err_E_${PHA_version}
 
-matlab -nosplash -nodesktop -nodisplay -r "addpath(genpath('..')); case_name = '${case_name}'; PHA_version = '${PHA_version}'; N_sub = ${N_sub}; mem_id = \${SLURM_ARRAY_TASK_ID}-1; Run_SATH_multiple_CPUs_S5_E; quit;">>${dir_log}/${case_name}_log_E_${PHA_version}_\${SLURM_ARRAY_TASK_ID}
+matlab -nosplash -nodesktop -nodisplay -r "addpath(genpath('..')); do_a_new_month = ${do_a_new_month}; case_name = '${case_name}'; PHA_version = '${PHA_version}'; N_sub = ${N_sub}; mem_id = \${SLURM_ARRAY_TASK_ID}-1; Run_SATH_multiple_CPUs_S5_E; quit;">>${dir_log}/${case_name}_log_E_${PHA_version}_\${SLURM_ARRAY_TASK_ID}
 EOF
 )
 echo Submitted Job ID : Estimation : ${job_Est}
@@ -128,7 +130,7 @@ export job_R2_NIBP=$(sbatch << EOF | egrep -o -e "\b[0-9]+$"
 #SBATCH --mem-per-cpu=${SATH_2nd_mem}
 #SBATCH -o ${dir_log}/${case_name}_err_R2_NIBP_${PHA_version}
 
-matlab -nosplash -nodesktop -nodisplay -r "addpath(genpath('..')); case_name = '${case_name}'; PHA_version = '${PHA_version}';  N_sub = ${CPU_per_job};  [sub_id, mem_id]= ind2sub([${CPU_per_job},${N_rnd}],\${SLURM_ARRAY_TASK_ID}); mem_id = mem_id - 1; Run_SATH_multiple_CPUs_S6_R2_NIBP; quit;">>${dir_log}/${case_name}_log_R2_NIBP_${PHA_version}_\${SLURM_ARRAY_TASK_ID}
+matlab -nosplash -nodesktop -nodisplay -r "addpath(genpath('..')); do_a_new_month = ${do_a_new_month}; case_name = '${case_name}'; PHA_version = '${PHA_version}';  N_sub = ${CPU_per_job};  [sub_id, mem_id]= ind2sub([${CPU_per_job},${N_rnd}],\${SLURM_ARRAY_TASK_ID}); mem_id = mem_id - 1; Run_SATH_multiple_CPUs_S6_R2_NIBP; quit;">>${dir_log}/${case_name}_log_R2_NIBP_${PHA_version}_\${SLURM_ARRAY_TASK_ID}
 EOF
 )
 echo Submitted Job ID : R2_NIBP : ${job_R2_NIBP}

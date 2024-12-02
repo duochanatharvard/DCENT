@@ -36,7 +36,7 @@ function dir = GHCN_IO(input)
         dir = [GHCN_IO('home'),'GHCNmV4/'];
 
     elseif strcmp(input,'date')
-        dir = '20240415';
+        dir = '20241114';
     end
 
     if ~strcmp(input,'date')

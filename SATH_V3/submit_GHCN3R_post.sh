@@ -34,10 +34,10 @@ export job_P2=$(sbatch << EOF | egrep -o -e "\b[0-9]+$"
 #SBATCH --account=${cluster_account}
 #SBATCH -p ${cluster_use}
 #SBATCH -J P2_${case_name}_${PHA_version}
-#SBATCH --nodes=1 
+#SBATCH -n 1 
 #SBATCH --array=1-${N_rnd}
 #SBATCH -t ${cluster_time}
-#SBATCH --mem-per-cpu=${SATH_grid}
+#SBATCH --mem=50000
 #SBATCH -o ${dir_log}/${case_name}_err_P2_${PHA_version}
 
 matlab -nosplash -nodesktop -nodisplay -r "addpath(genpath('..')); case_name = '${case_name}'; PHA_version = '${PHA_version}'; mem_id = \${SLURM_ARRAY_TASK_ID}-1; SATH_GHCN3R_post_02_grid; quit;">>${dir_log}/${case_name}_log_P2_${PHA_version}_\${SLURM_ARRAY_TASK_ID}

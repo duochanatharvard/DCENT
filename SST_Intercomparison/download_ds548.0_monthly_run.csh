@@ -47,7 +47,7 @@ else
 endif
 
 set filelist= ( \
-  https://data.rda.ucar.edu/ds548.0/netcdf_r3.0/ICOADS_R3.0.2_2024-04.nc  \
+  https://data.rda.ucar.edu/ds548.0/netcdf_r3.0/ICOADS_R3.0.2_2024-10.nc  \
 )
 while($#filelist > 0)
   set syscmd = "wget $cert_opt $opts -P $dir_ICOADS $filelist[1]"

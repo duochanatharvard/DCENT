@@ -84,8 +84,8 @@ disp('Gridding monthly data')
 clear('SAT_grid','SAT_N','SAT_GL','SAT_REG')
 reso_x    = 1; 
 reso_y    = 1; 
-SAT_grid  = nan(360/reso_x,180/reso_y,12,Ny,3);
-SAT_N     = nan(360/reso_x,180/reso_y,12,Ny,3);
+SAT_grid  = nan(360/reso_x,180/reso_y,12,Ny,3,'single');
+SAT_N     = nan(360/reso_x,180/reso_y,12,Ny,3,'single');
 for id = 1:3
     for ct_yr = 1:size(SAT_all_anm,3)
         if rem(ct_yr,20) == 0,  disp(ct_yr);  end

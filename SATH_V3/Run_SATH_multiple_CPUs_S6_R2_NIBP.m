@@ -5,7 +5,7 @@ SATH_setup;
 % #########################################################################
 fsave   = SATH_IO(case_name,'initial_R2',mem_id,PHA_version,sub_id);
 
-if ~isfile(fsave)
+if ~isfile(fsave) || do_a_new_month == 1
     D           = SATH_IO(case_name,'raw_data',mem_id,PHA_version);
     fload       = SATH_IO(case_name,'result',mem_id,PHA_version);
     load(fload,'T_corr_output');
