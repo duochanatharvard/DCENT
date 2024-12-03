@@ -2,6 +2,7 @@
 source ../DCENT_config.sh
 export dir_list_file="../dir_list.txt"
 dir_download=$(grep "others" "$dir_list_file" | head -n 1)
+dir_log=$(grep "log" "$dir_list_file" | head -n 1)
 
 export dir_local=${dir_download}"/ERSST5/"
 rm ${dir_local}ERSST5_5x5_regridded.mat
